@@ -9,8 +9,6 @@
     "author": "Hardeep Singh <hardeepsingh12994@gmail.com>",
     "license": "ISC",
     "dependencies": {
-        "app-root-path": "^2.0.1",
-        "express": "^4.15.3",
         "msexcel-builder": "0.0.2"
     }
 }
