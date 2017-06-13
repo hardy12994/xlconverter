@@ -8,14 +8,14 @@
 ### Excel to objects
    
 - Purpose - convert Excel Rows to objects.   
-- xl_objects function is use for it.
+- xlToObjects function is use for it.
 - Parameters required - `filePath` the path of excel file from where to get it.
 - It returns the rows in the form of objects , with related keys.
 
 ### Objects to Excel
 
-- Purpose - convert excel to objects.   
-- objects_xl function is use for it.
+- Purpose - convert excel to objects.
+- objectsToXl function is use for it.
 - It returns Promise will be reject Or resolve with string.
   - For resolve `sheetName` sheet successfully created.
   - For reject `sheetName` sheet not created.
