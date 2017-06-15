@@ -1,6 +1,6 @@
 "use strict";
 var _ = require('underscore');
-var xlToObjects = require('./xlToObjects');
+var xlToObjects = require('../converters/xlToObjects');
 
 module.exports.getRow = (filePath, rowQuery) => {
 
