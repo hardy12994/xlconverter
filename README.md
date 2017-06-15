@@ -1,6 +1,6 @@
  Nowdays everything is easly maintain if we are dealing with objects .As I have face many problems while in uploading excel file ,taking data from excel and play with each Cell of excel file .This Converter is just a interface which helps to get objects from excel Or excel from objects.
  
- Here are the two Converters present in it :
+ Here are the two Converters and Some Getters(define below) present in it :
 
 - Excel to Objects
 - Objects to Excel
@@ -43,6 +43,48 @@
 -  Will be of String.
 -  Name of Sheet i.e which will be by default `sheet1`.
 
+## Getters
+
+We can use Excel Sheet as a Very small Database as we can Do
+Extractions from that by putting some queries,
+The query can be made in form of Objects, Arrays
+ Thing Can be Achive like:
+- Any Perticular Row.
+- Any Perticular Coloumn.
+- Get Number of Rows.
+- Get Number of Coloumns.
+- Get Data as Objects of Perticular Coloumns.
+
+### Get Row
+- Function Used: getRow.
+- Parameters needed :filePath,query.
+- Accept Query as Object Eg- {name:"Jhon",age:"21"}.
+- `and` type of query will be done.
+- Return Single Row which matches both Conditions `First`.
+
+### Get Rows
+- Function Used: getRows.
+- Parameters needed :filePath,query.
+- Accept Parameters as Object Eg- {name:"Jhon",age:"21"}.
+- `and` type of query will be done.
+- Return Multiple Rows which matches both Conditions.
+
+### Get Coloumn
+- Function Used: getColoumn.
+- Parameters needed :filePath,query.
+- Accept Parameters as String Eg- "name".
+- Return Array of Strings which is Present in that Coloumn.
 
 
+### Get Coloumns
+- Function Used: getColoumns.
+- Parameters needed :filePath,queries.
+- Accept Parameters as String in Array Eg- ["name","age"].
+- Return Object with Keys name and age and both of them have Array
+ of Strings which is Present in respective Coloumn.
 
+ ### Get Rows from Selective Coloumns
+- Function Used: getRowsOfCols.
+- Parameters needed :filePath,queries.
+- Accept Parameters as String in Array Eg- ["name","age"].
+- Return all Rows with Selected coloumns name and age as Objects in Array

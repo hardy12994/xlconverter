@@ -133,7 +133,7 @@ module.exports.getColoumns = (filePath, colQueries) => {
 };
 
 
-module.exports.getObjectsOfCols = (filePath, colomns) => {
+module.exports.getRowsOfCols = (filePath, colomns) => {
 
     let objects = xlToObjects.xlToObjects(filePath);
 
