@@ -16,7 +16,7 @@
 
 - Purpose - convert excel to objects.
 - objectsToXl function is use for it.
-- It returns Promise will be reject Or resolve with string.
+- It returns callback will be err Or data as string.
   - For resolve `sheetName` sheet successfully created.
   - For reject `sheetName` sheet not created.
 
