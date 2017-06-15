@@ -28,7 +28,7 @@
 -  Write the sequence you want it in excel.
 
 #### objects
--  Will be of Objects in Array i.e [ { } ] .
+-  Will be of Objects in Array i.e `[ { } ]` .
 -  They are Rows of your excel sheet.
 
 #### path
@@ -58,33 +58,33 @@ The query can be made in form of Objects, Arrays
 ### Get Row
 - Function Used: getRow.
 - Parameters needed :filePath,query.
-- Accept Query as Object Eg- {name:"Jhon",age:"21"}.
+- Accept Query as Object Eg- `{name:"Jhon",age:"21"}`.
 - `and` type of query will be done.
 - Return Single Row which matches both Conditions `First`.
 
 ### Get Rows
 - Function Used: getRows.
 - Parameters needed :filePath,query.
-- Accept Parameters as Object Eg- {name:"Jhon",age:"21"}.
+- Accept Parameters as Object Eg- `{name:"Jhon",age:"21"}`.
 - `and` type of query will be done.
 - Return Multiple Rows which matches both Conditions.
 
 ### Get Coloumn
 - Function Used: getColoumn.
 - Parameters needed :filePath,query.
-- Accept Parameters as String Eg- "name".
+- Accept Parameters as String Eg- `"name"`.
 - Return Array of Strings which is Present in that Coloumn.
 
 
 ### Get Coloumns
 - Function Used: getColoumns.
 - Parameters needed :filePath,queries.
-- Accept Parameters as String in Array Eg- ["name","age"].
+- Accept Parameters as String in Array Eg- `["name","age"]`.
 - Return Object with Keys name and age and both of them have Array
  of Strings which is Present in respective Coloumn.
 
  ### Get Rows from Selective Coloumns
 - Function Used: getRowsOfCols.
 - Parameters needed :filePath,queries.
-- Accept Parameters as String in Array Eg- ["name","age"].
+- Accept Parameters as String in Array Eg- `["name","age"]`.
 - Return all Rows with Selected coloumns name and age as Objects in Array

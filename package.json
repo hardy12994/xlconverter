@@ -1,16 +1,16 @@
 {
-  "name": "xlconverter",
-  "version": "1.0.6",
-  "description": "xl to objects",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Hardeep Singh <hardeepsingh12994@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "msexcel-builder": "0.0.2",
-    "underscore": "^1.8.3",
-    "xlsx": "^0.10.5"
-  }
+    "name": "xlconverter",
+    "version": "1.0.7",
+    "description": "xl to objects",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Hardeep Singh <hardeepsingh12994@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "msexcel-builder": "0.0.2",
+        "underscore": "^1.8.3",
+        "xlsx": "^0.10.5"
+    }
 }
