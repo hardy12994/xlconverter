@@ -45,15 +45,15 @@
 
 ## Getters
 
-We can use Excel Sheet as a Very small Database as we can Do
+We can use Excel Sheet as a very small Database as we can do
 Extractions from that by putting some queries,
 The query can be made in form of Objects, Arrays
- Thing Can be Achive like:
+ Thing can be achive like:
 - Any Perticular Row.
-- Any Perticular Coloumn.
+- Any Perticular Column.
 - Get Number of Rows.
-- Get Number of Coloumns.
-- Get Data as Objects of Perticular Coloumns.
+- Get Number of Columns.
+- Get Data as Objects of Perticular Columns.
 
 ### Get Row
 - Function Used: getRow.
@@ -69,22 +69,22 @@ The query can be made in form of Objects, Arrays
 - `and` type of query will be done.
 - Return Multiple Rows which matches both Conditions.
 
-### Get Coloumn
-- Function Used: getColoumn.
+### Get Column
+- Function Used: getColumn.
 - Parameters needed :filePath,query.
 - Accept Parameters as String Eg- `"name"`.
-- Return Array of Strings which is Present in that Coloumn.
+- Return Array of Strings which is Present in that Column.
 
 
-### Get Coloumns
-- Function Used: getColoumns.
+### Get Columns
+- Function Used: getColumns.
 - Parameters needed :filePath,queries.
 - Accept Parameters as String in Array Eg- `["name","age"]`.
 - Return Object with Keys name and age and both of them have Array
- of Strings which is Present in respective Coloumn.
+ of Strings which is Present in respective Column.
 
- ### Get Rows from Selective Coloumns
+### Get Rows from Selective Columns
 - Function Used: getRowsOfCols.
 - Parameters needed :filePath,queries.
 - Accept Parameters as String in Array Eg- `["name","age"]`.
-- Return all Rows with Selected coloumns name and age as Objects in Array
+- Return all Rows with Selected Columns name and age as Objects in Array
