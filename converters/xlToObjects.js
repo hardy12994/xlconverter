@@ -3,7 +3,7 @@ var xlsx = require('xlsx');
 var _ = require('underscore');
 var excelbuilder = require('msexcel-builder');
 
-module.exports.xlToObjects = filePath => {
+module.exports.xlToObjects = (filePath, callback) => {
     const workbook = xlsx.readFile(filePath);
     if (!workbook.Sheets) {
         throw ('no sheets is present excel');
@@ -12,6 +12,9 @@ module.exports.xlToObjects = filePath => {
     let headers = [];
     let actualData = [];
     let sheet1 = workbook.Sheets.Sheet1;
+    if (!sheet1 && callback) {
+        callback('sheet1 is required');
+    }
     let keys = _.keys(sheet1);
     let pattern = /[A-Z]/g;
     let lastCell = sheet1['!ref'].substr(sheet1['!ref'].match(':').index + 1, sheet1['!ref'].length);
@@ -38,7 +41,8 @@ module.exports.xlToObjects = filePath => {
         let row = new Object();
         for (let i = 0; i <= headers.length - 1; i++) {
             let headerName = headers[i].h;
-            row[headerName] = (_.find(cellsInRow, item => item.cellStrPart === headers[i].cellStrPart)).v || '';
+            let valueOfHeader = _.find(cellsInRow, item => item.cellStrPart === headers[i].cellStrPart);
+            row[headerName] = valueOfHeader ? valueOfHeader.v : '';
         }
         actualData.push(row);
     };
@@ -46,6 +50,10 @@ module.exports.xlToObjects = filePath => {
     for (let i = 2; i <= numberOfRows + 1; i++) {
         let cellsInRow = _.filter(data, item => item.cellNumPart == i);
         configureCells(cellsInRow);
+    }
+
+    if (callback) {
+        return callback(null, actualData)
     }
     return actualData;
 };
