@@ -8,43 +8,73 @@
 - Excel to Objects
 - Objects to Excel
 
-### Excel to objects
+### Excel to Objects
    
-- Purpose - convert Excel Rows to objects.   
-- xlToObjects function is use for it.
-- Parameters required - `filePath` the path of excel file from where to get it.
-- It returns the rows in the form of objects , with related keys.
+   ```sh
+
+   let xlconverter = require('xlconverter');
+
+    let path="abv/cac/ac/ac.xlsx";
+    let sheet="sheet1";
+
+
+    // xlToObjects, will provide objects of all the sheets present in xl sheet;
+
+     xlconverter.xlToObjects(path, function (err, data) {
+         console.log(err);
+         console.log(data);
+     });
+
+
+    /**
+    * data-
+    *
+    * [{},{},{}]
+    * // object as rows
+    */
+
+
+    // xlToObjectsOfSheet, will provide objects of perticular sheet present in xl sheet;
+
+     xlconverter.xlToObjectsOfSheet(path, sheet, function (err, data) {
+         console.log(err);
+         console.log(data);
+     });
+
+      /**
+      * data -
+      * {
+      *   sheet1: [{},{},{}],
+      *   sheet2: [{},{},{}]
+      * }
+      * // object as rows
+      */
+     
+
+   ```
 
 ### Objects to Excel
 
-- Purpose - convert excel to objects.
-- objectsToXl function is use for it.
-- It returns callback will be err Or data as string.
-  - For resolve `sheetName` sheet successfully created.
-  - For reject `sheetName` sheet not created.
+```sh
 
-- Parameters required - `headers`,`objects`,`path`,`fileName`,`sheetName`.
+     let headers=["name","age"];
+     let rows=[{ name:"hardy",age:21 },{ name:"hardy",age:21 }];
+     let path="abc/cac/";
+     let fileName="myNewSheet"; //.xlsx is by default
+     let sheetName="sheet1";
 
-#### headers
--  Will be of Array.
--  They are headers of your excel sheet.
--  Write the sequence you want it in excel.
+     xlconverter.objectsToXl(headers, rows, path, fileName, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
 
-#### objects
--  Will be of Objects in Array i.e `[ { } ]` .
--  They are Rows of your excel sheet.
+      /**
+      * if error -`sheetName` sheet not created
+      * data -
+      * `sheetName` sheet successfully created.
+      */
 
-#### path
--  Will be of String.
--  Path where you want to save it.
-
-#### fileName
--  Will be of String.
--  Name of file, Eg:Sample (`.xlsx is by default`)
-
-#### sheetName
--  Will be of String.
--  Name of Sheet i.e which will be by default `sheet1`.
+```
 
 ## Getters
 
@@ -59,35 +89,148 @@ The query can be made in form of Objects, Arrays
 - Get Data as Objects of Perticular Columns.
 
 ### Get Row
-- Function Used: getRow.
-- Parameters needed :filePath,query.
+
 - Accept Query as Object Eg- `{name:"Jhon",age:"21"}`.
 - `and` type of query will be done.
 - Return Single Row which matches both Conditions `First`.
 
+```sh
+
+     let rowQuery= {name:"Jhon",age:"21"};
+     let filePath="abc/cac/";
+     let sheetName="sheet1";
+     
+     xlconverter.getters.row(filePath, rowQuery, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
+
+    /**
+    * data-
+    *
+    * {name:"Jhon", age:"21", f_name:"D_Jhon"}
+    * // object as rows
+    */
+
+
+```
+
+
 ### Get Rows
-- Function Used: getRows.
-- Parameters needed :filePath,query.
 - Accept Parameters as Object Eg- `{name:"Jhon",age:"21"}`.
 - `and` type of query will be done.
 - Return Multiple Rows which matches both Conditions.
 
+
+```sh
+
+     let rowQuery= {name:"Jhon",age:"21"};
+     let filePath="abc/cac/";
+     let sheetName="sheet1";
+     
+     xlconverter.getters.rows(filePath, rowQuery, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
+
+    /**
+    * data-
+    *
+    * [{name:"Jhon", age:"21", f_name:"D_Jhon"},
+    * {name:"Jhon", age:"21", f_name:"D_Jhonee"}]
+    * // object as rows
+    */
+
+```
+
+
 ### Get Column
-- Function Used: getColumn.
-- Parameters needed :filePath,query.
 - Accept Parameters as String Eg- `"name"`.
 - Return Array of Strings which is Present in that Column.
 
 
+```sh
+
+     let colQuery= "name";
+     let filePath="abc/cac/";
+     let sheetName="sheet1";
+     
+     xlconverter.getters.coloumn(filePath, colQuery, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
+
+    /**
+    * data-
+    *
+    * ["Jhon","Jhon2","Jhon3"]
+    * // as coloumn cells
+    */
+
+```
+
+
 ### Get Columns
-- Function Used: getColumns.
-- Parameters needed :filePath,queries.
 - Accept Parameters as String in Array Eg- `["name","age"]`.
 - Return Object with Keys name and age and both of them have Array
  of Strings which is Present in respective Column.
 
+
+```sh
+
+     let colQuery= ["name","age"];
+     let filePath="abc/cac/";
+     let sheetName="sheet1";
+     
+     xlconverter.getters.coloumns(filePath, colQuery, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
+
+    /**
+    * data-
+    *
+    * {
+    *  name:["Jhon","Jhon2","Jhon3"],
+    *  age:[21,33,13]
+    * }
+    * // as coloumn cells
+    */
+
+```
+
+
 ### Get Rows from Selective Columns
-- Function Used: getRowsOfCols.
-- Parameters needed :filePath,queries.
 - Accept Parameters as String in Array Eg- `["name","age"]`.
 - Return all Rows with Selected Columns name and age as Objects in Array
+- Getting Selective Coloumns of Rows. 
+
+```sh
+
+     let colQuery= ["name","age"];
+     let filePath="abc/cac/";
+     let sheetName="sheet1";
+     
+     xlconverter.getters.selectiveColoumnsOfRows(filePath, colQuery, sheetName, function (err, data) {
+         console.log(err);
+         console.log(data); 
+     });
+
+    /**
+    * data-
+    *
+    * [
+    *   {name: "hardy", age: 12},
+    *   {name: "pery", age: 41},
+    *   {name: "bob", age: 42}
+    *  ]
+    * // 
+    */
+
+```
+
+**N O T E** :
+- `callback` function is required in all methods.
+- `getters` are using `xlToObjectsOfSheet` function that's why sheet name is required.
+
+**Contributions are most wellcome**

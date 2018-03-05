@@ -1,8 +1,23 @@
 "use strict";
-exports.xlToObjects = require('./converters/xlToObjects').xlToObjects;
-exports.objectsToXl = require('./converters/objectsToXl').objectsToXl;
-let getters = require('./getters/getFromXl');
+let gettersFunc = require('./getters/getFromXl');
 
-for (var key in getters) {
-    exports[key] = getters[key];
-}
+/**
+ * for xl gameplay
+*/
+
+// to objects from excel
+exports.xlToObjects = require('./xlConversions/xlToObjects').xlToObjects;
+
+exports.xlToObjectsOfSheet = require('./xlConversions/xlToObjects').xlToObjectsOfSheet;
+
+exports.getters = {
+    row: gettersFunc.getRow,
+    rows: gettersFunc.getRows,
+    coloumn: gettersFunc.getColoumn,
+    coloumns: gettersFunc.getColoumns,
+    selectiveColoumnsOfRows: gettersFunc.getRowsOfCols
+};
+
+// to excel from objects
+exports.objectsToXl = require('./xlConversions/objectsToXl').objectsToXl;
+
