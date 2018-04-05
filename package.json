@@ -1,13 +1,25 @@
 {
     "name": "xlconverter",
-    "version": "1.0.7",
-    "description": "xl to objects",
+    "version": "2.0.0",
+    "description": " Nowdays everything is easly maintain if we are dealing with objects .As I have face many problems while in uploading excel file ,taking data from excel and play with each Cell of excel file .This Converter is just a interface which helps to get objects from excel Or excel from objects.",
     "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "author": "Hardeep Singh <hardeepsingh12994@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hardy12994/xlconverter.git"
+    },
+    "homepage": "https://github.com/hardy12994/xlconverter#readme",
     "license": "ISC",
+    "keywords": [
+        "xl to objects",
+        "objects to xl",
+        "xl",
+        "xlconverter",
+        "xlconversions",
+        "xlconversions npm",
+        "xl to objects npm",
+        "objects to xl npm"
+    ],
     "dependencies": {
         "msexcel-builder": "0.0.2",
         "underscore": "^1.8.3",
