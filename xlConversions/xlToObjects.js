@@ -105,7 +105,7 @@ module.exports.xlToObjectsOfSheet = (filePath, sheetName, callback) => {
     if (!requiredSheet) {
         throw new Error('provided sheet name is not present in the file');
     }
-    
+
     let obj = new Object();
     obj[sheetName] = workbook.Sheets[sheetName];
 
