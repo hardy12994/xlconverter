@@ -1,155 +1,159 @@
 "use strict";
 var _ = require('underscore');
-var xlToObjects = require('../converters/xlToObjects');
+var xlToObjects = require('../xlConversions/xlToObjects');
 
-module.exports.getRow = (filePath, rowQuery) => {
+exports.getRow = (filePath, rowQuery, sheetName, callback) => {
 
-    if (_.isEmpty(rowQuery)) {
-        return xlToObjects.xlToObjects(filePath);
-    }
     let count = 0;
     let keys = _.keys(rowQuery);
-    let objects = xlToObjects.xlToObjects(filePath);
+    xlToObjects.xlToObjectsOfSheet(filePath, sheetName, function (err, objects) {
+        if (err) {
+            return callback(err);
+        }
+        let objectCollections = objects[sheetName];
 
-    let getLatestPair = function() {
-        let val = rowQuery[keys[count]];
-        let returnPair = { key: keys[count], val: val };
-        count++;
-        return returnPair;
-    };
-    let pair = getLatestPair();
 
-    let neededRow = _.find(objects, obj => {
-        if (obj[pair.key].search(new RegExp(rowQuery[pair.key], 'gi')) >= 0) {
+        if (_.isEmpty(rowQuery)) {
+            return callback(null, objectCollections);
+        }
 
-            if (keys.length === 1) {
+        let found = [];
+
+        let neededRow = _.find(objectCollections, obj => {
+
+            for (const key in rowQuery) {
+
+                if (rowQuery[key].toString() === obj[key].toString()) {
+                    found.push(1);
+                }
+            }
+            if (found.length === Object.keys(rowQuery).length) {
                 return obj;
             }
+            found = [];
+        }) || null;
 
-            for (var i = 2; i <= keys.length; i++) {
-                let newPair = getLatestPair();
-                if (obj[newPair.key].search(new RegExp(rowQuery[pair.key], 'gi')) < 0) {
-                    obj.break = true;
-                    break;
+        return callback(null, neededRow);
+    });
+};
+
+exports.getRows = (filePath, rowQuery, sheetName, callback) => {
+
+    let count = 0;
+    let keys = _.keys(rowQuery);
+
+    xlToObjects.xlToObjectsOfSheet(filePath, sheetName, function (err, objects) {
+        if (err) {
+            return callback(err);
+        }
+        let objectCollections = objects[sheetName];
+
+
+        if (_.isEmpty(rowQuery)) {
+            return callback(null, objectCollections);
+
+        }
+
+
+        let neededRows = _.filter(objectCollections, obj => {
+            let found = [];
+
+            for (const key in rowQuery) {
+
+                if (rowQuery[key].toString() === obj[key].toString()) {
+                    found.push(1);
                 }
             }
 
-            if (obj.break) {
-                return null;
-            } else {
+            if (found.length === Object.keys(rowQuery).length) {
                 return obj;
             }
-        }
-    }) || null;
 
-    return neededRow;
+        }) || [];
+
+        return callback(null, neededRows);
+    });
 };
 
-module.exports.getRows = (filePath, rowQuery) => {
 
-    if (_.isEmpty(rowQuery)) {
-        return xlToObjects.xlToObjects(filePath);
-    }
-    let count = 0;
-    let keys = _.keys(rowQuery);
-    let objects = xlToObjects.xlToObjects(filePath);
+exports.getColoumn = (filePath, colQuery, sheetName, callback) => {
 
-    let getLatestPair = function() {
-        let val = rowQuery[keys[count]];
-        let returnPair = {
-            key: keys[count],
-            val: val
-        };
-        count++;
-        return returnPair;
-    };
-    let pair = getLatestPair();
+    xlToObjects.xlToObjectsOfSheet(filePath, sheetName, function (err, objects) {
+        if (err) {
+            return callback(err);
+        }
+        let objectCollections = objects[sheetName];
 
-    let neededRow = _.filter(objects, obj => {
-        if (obj[pair.key].search(new RegExp(rowQuery[pair.key], 'gi')) >= 0) {
+        if (_.isEmpty(colQuery)) {
+            return callback(null, objectCollections);
+        }
 
-            if (keys.length === 1) {
-                return obj;
-            }
+        let keys = _.keys(objectCollections[0]);
 
-            for (var i = 2; i <= keys.length; i++) {
-                let newPair = getLatestPair();
-                if (obj[newPair.key].search(new RegExp(rowQuery[pair.key], 'gi')) < 0) {
-                    obj.break = true;
-                    break;
+        let present = keys.forEach(item => {
+            return item === colQuery;
+        });
+
+        if (!present) {
+            return callback(null, []);
+        }
+
+        let filteredData = _.pluck(objectCollections, colQuery) || [];
+        return callback(null, filteredData);
+    });
+};
+
+
+exports.getColoumns = (filePath, colQueries, sheetName, callback) => {
+
+    xlToObjects.xlToObjectsOfSheet(filePath, sheetName, function (err, objects) {
+        
+        if (err) {
+            return callback(err);
+        }
+
+        let objectCollections = objects[sheetName];
+
+        if (_.isEmpty(colQueries)) {
+            return callback(null, objectCollections);
+        }
+
+        let returncoloumns = {};
+
+        colQueries.forEach(col => {
+            returncoloumns[col] = _.pluck(objectCollections, col) || [];
+        });
+
+        return callback(null, returncoloumns);
+    });
+
+};
+
+
+exports.getRowsOfCols = (filePath, colomns, sheetName, callback) => {
+
+    xlToObjects.xlToObjectsOfSheet(filePath, sheetName, function (err, objects) {
+        if (err) {
+            return callback(err);
+        }
+        let objectCollections = objects[sheetName];
+
+        if (_.isEmpty(colomns)) {
+            return callback(null, objectCollections);
+        }
+
+        let neededItems = [];
+        objectCollections.forEach(item => {
+            let obj = new Object();
+            for (var key in item) {
+                if (colomns.includes(key)) {
+                    obj[key] = item[key];
                 }
             }
+            neededItems.push(obj);
+        });
 
-            if (obj.break) {
-                return null;
-            } else {
-                return obj;
-            }
-        }
-    }) || null;
-
-    return neededRow;
-};
-
-
-module.exports.getColoumn = (filePath, colQuery) => {
-
-    if (_.isEmpty(colQuery)) {
-        return xlToObjects.xlToObjects(filePath);
-    }
-
-    let objects = xlToObjects.xlToObjects(filePath);
-    let keys = _.keys(objects[0]);
-
-    if (!keys.includes[colQuery]) {
-        return [];
-    }
-    return _.pluck(objects, colQuery);
-
-};
-
-
-module.exports.getColoumns = (filePath, colQueries) => {
-
-    let objects = xlToObjects.xlToObjects(filePath);
-
-    if (_.isEmpty(colQueries)) {
-        return xlToObjects.xlToObjects(filePath);
-    }
-
-
-    let returncoloumns = {};
-
-    colQueries.forEach(col => returncoloumns[col] = []);
-
-    objects.forEach(obj => {
-        for (var key in obj) {
-            if (colQueries.includes(key)) {
-                returncoloumns[key].push(obj[key]);
-            }
-        }
-    });
-    return returncoloumns;
-};
-
-
-module.exports.getRowsOfCols = (filePath, colomns) => {
-
-    let objects = xlToObjects.xlToObjects(filePath);
-
-    if (_.isEmpty(colomns)) {
-        return xlToObjects.xlToObjects(filePath);
-    }
-    let neededItems = [];
-    objects.forEach(item => {
-        let obj = new Object();
-        for (var key in item) {
-            if (colomns.includes(key)) {
-                obj[key] = item[key];
-            }
-        }
-        neededItems.push(obj);
+        return callback(null, neededItems);
     });
 
-    return neededItems;
 };
