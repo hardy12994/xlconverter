@@ -229,4 +229,8 @@ The query can be made in form of Objects, Arrays
 
 ```
 
+**N O T E** :
+- `callback` function is required in all methods.
+- `getters` are using `xlToObjectsOfSheet` function that's why sheet name is required.
+
 **Contributions are most wellcome**
